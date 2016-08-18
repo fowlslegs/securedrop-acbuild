@@ -29,15 +29,15 @@ acbuild --debug dep add quay.io/sameersbn/ubuntu
 # acbuild --debug run -- apt-get update
 #acbuild --debug run -- apt-get -y upgrade
 
-# Install curl
+# Install curl and securedrop dependencies
 acbuild --debug run -- /bin/sh -c 'echo "deb http://security.ubuntu.com/ubuntu trusty-security main" >> /etc/apt/sources.list'
 acbuild --debug run -- apt-get update
 acbuild --debug run -- apt-get -y upgrade
-acbuild --debug run -- apt-get -y install curl
+acbuild --debug run -- apt-get -y install curl python-pip apparmor-utils gnupg2 haveged python python-pip secure-delete sqlite apache2-mpm-worker libapache2-mod-wsgi libapache2-mod-xsendfile redis-server supervisor
 
 # Install acbuild fork of securedrop-app-code
-acbuild --debug run -- curl -o /tmp/securedrop-app-code-acbuild.deb https://linx.li/selif/securedrop-app-code-038-amd64.deb
-acbuild --debug run -- apt-get -y install /tmp/securedrop-app-code-acbuild.deb
+acbuild --debug run -- curl -o securedrop-app-code-acbuild.deb https://linx.li/selif/securedrop-app-code-038-amd64.deb
+acbuild --debug run -- dpkg -i securedrop-app-code-acbuild.deb
 
 acbuild --debug set-exec -- /bin/sh -c "chmod 755 / && /usr/sbin/httpd -D FOREGROUND"
 
